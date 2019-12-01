@@ -5,19 +5,31 @@ var ReactDOM = require("react-dom");
 var TodoComponent = React.createClass({
   getInitialState: function() {
     return {
-      todos: ["wash up", "eat some cheese", "take a nap"]
+      todos: ["wash up", "eat some cheese", "take a nap", "study"],
+      age: 30
     };
   }, // getInitialState method
 
   render: function() {
+    var todos = this.state.todos;
+    todos = todos.map(function(item) {
+      return <li>{item}</li>;
+    });
+    // var ager = setTimeout(
+    //   function() {
+    //     this.setState({
+    //       age: 35
+    //     });
+    //   }.bind(this),
+    //   5000
+    // );
+    //data used for showing how to change state
+
     return (
       <div id="todo-list">
         <p>The busiest people have the most leisure</p>
-        <ul>
-          <li>{this.state.todos[0]}</li>
-          <li>{this.state.todos[1]}</li>
-          <li>{this.state.todos[2]}</li>
-        </ul>
+        <p>{this.state.age}</p>
+        <ul>{todos}</ul>
       </div>
     );
   } //render method
