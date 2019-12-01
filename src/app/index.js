@@ -1,6 +1,10 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 
+//MODULE REQUIRES
+
+var TodoItem = require("./todoitem");
+
 //Create component
 var TodoComponent = React.createClass({
   getInitialState: function() {
@@ -12,9 +16,11 @@ var TodoComponent = React.createClass({
 
   render: function() {
     var todos = this.state.todos;
-    todos = todos.map(function(item) {
-      return <li>{item}</li>;
-    });
+    todos = todos.map(
+      function(item, index) {
+        return <TodoItem item={item} key={index} onDelete={this.onDelete} />;
+      }.bind(this) // because TodItem has no idea what "this" is
+    );
     // var ager = setTimeout(
     //   function() {
     //     this.setState({
@@ -32,11 +38,21 @@ var TodoComponent = React.createClass({
         <ul>{todos}</ul>
       </div>
     );
-  } //render method
-});
+  }, //render method ends here
+
+  //Custom functions
+  onDelete: function(item) {
+    var updatedTodos = this.state.todos.filter(function(val, index) {
+      return item !== val;
+    });
+
+    this.setState({
+      todos: updatedTodos
+    });
+  }
+}); //TodoComponent ends here
 
 //put into html doc
-
 ReactDOM.render(<TodoComponent />, document.getElementById("todo-wrapper"));
 
 //DATA FOR PROPS
