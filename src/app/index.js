@@ -1,16 +1,17 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
+require("../css/index.css");
 
 //MODULE REQUIRES
 
 var TodoItem = require("./todoitem");
+var AddItem = require("./additem");
 
 //Create component
 var TodoComponent = React.createClass({
   getInitialState: function() {
     return {
-      todos: ["wash up", "eat some cheese", "take a nap", "study"],
-      age: 30
+      todos: ["wash up", "eat some cheese", "take a nap", "study"]
     };
   }, // getInitialState method
 
@@ -34,8 +35,8 @@ var TodoComponent = React.createClass({
     return (
       <div id="todo-list">
         <p>The busiest people have the most leisure</p>
-        <p>{this.state.age}</p>
         <ul>{todos}</ul>
+        <AddItem onAdd={this.onAdd} />
       </div>
     );
   }, //render method ends here
@@ -46,6 +47,14 @@ var TodoComponent = React.createClass({
       return item !== val;
     });
 
+    this.setState({
+      todos: updatedTodos
+    });
+  },
+
+  onAdd: function(item) {
+    var updatedTodos = this.state.todos;
+    updatedTodos.push(item);
     this.setState({
       todos: updatedTodos
     });
