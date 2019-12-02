@@ -1,4 +1,5 @@
 var React = require("react");
+require("../css/additem.css");
 
 var AddItem = React.createClass({
   render: function() {

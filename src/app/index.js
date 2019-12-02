@@ -2,10 +2,33 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 require("../css/index.css");
 
+// import { Router, Route, browserHistory } from "react-router";
+import {
+  browserHistory,
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
+
 //MODULE REQUIRES
 
 var TodoItem = require("./todoitem");
 var AddItem = require("./additem");
+var About = require("./about");
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <Router history={browserHistory}>
+        <div>
+          <Route path={"/"} component={TodoComponent}></Route>
+
+          <Route path={"/about"} component={About}></Route>
+        </div>
+      </Router>
+    );
+  }
+});
 
 //Create component
 var TodoComponent = React.createClass({
@@ -34,6 +57,7 @@ var TodoComponent = React.createClass({
 
     return (
       <div id="todo-list">
+        <Link to={"/about"}>About</Link>
         <p>The busiest people have the most leisure</p>
         <ul>{todos}</ul>
         <AddItem onAdd={this.onAdd} />
@@ -58,11 +82,26 @@ var TodoComponent = React.createClass({
     this.setState({
       todos: updatedTodos
     });
+  },
+
+  //LIFECYCLE FUNCTIONS
+  componentWillMount: function() {
+    console.log("componentWillMount");
+  },
+
+  componentDidMount: function() {
+    console.log("componentDidMount");
+
+    //good place for any grabbing of external data
+  },
+
+  componentWillUpdate: function() {
+    console.log("componentWillUpdate");
   }
 }); //TodoComponent ends here
 
 //put into html doc
-ReactDOM.render(<TodoComponent />, document.getElementById("todo-wrapper"));
+ReactDOM.render(<App />, document.getElementById("todo-wrapper"));
 
 //DATA FOR PROPS
 
